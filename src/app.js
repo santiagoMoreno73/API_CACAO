@@ -3,7 +3,7 @@ const express = require("express");
 const config = require("./config");
 const morgan = require("morgan");
 
-const customers = require("./modules/customers/routes");
+const users = require("./modules/users/routes");
 const auth = require("./modules/auth/routes");
 const error = require("./red/errors");
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("port", config.app.port);
 
 // routes
-app.use("/api/customers", customers);
+app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use(error);
 
