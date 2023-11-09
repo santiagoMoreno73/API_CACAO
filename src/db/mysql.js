@@ -54,6 +54,18 @@ function one(table, id) {
   });
 }
 
+function add(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `INSERT INTO ${table} SET ? ON DUPLICATE KEY UPDATE ?`,
+      [data, data],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
+
 function remove(table, data) {
   return new Promise((resolve, reject) => {
     conexion.query(
@@ -66,29 +78,13 @@ function remove(table, data) {
   });
 }
 
-function add(table, data) {
-  if (data && data.id == 0) {
-    return insert(table, data);
-  } else {
-    return update(table, data);
-  }
-}
-
-function insert(table, data) {
-  return new Promise((resolve, reject) => {
-    conexion.query(`INSERT INTO ${table} SET ?`, data, (error, result) => {
-      return error ? reject(error) : resolve(result);
-    });
-  });
-}
-
-function update(table, data) {
+function query(table, consult) {
   return new Promise((resolve, reject) => {
     conexion.query(
-      `UPDATE ${table} SET ? WHERE id = ?`,
-      [data, data.id],
+      `SELECT * FROM ${table} WHERE ?`,
+      consult,
       (error, result) => {
-        return error ? reject(error) : resolve(result);
+        return error ? reject(error) : resolve(result[0]);
       }
     );
   });
@@ -99,4 +95,5 @@ module.exports = {
   one,
   add,
   remove,
+  query,
 };
