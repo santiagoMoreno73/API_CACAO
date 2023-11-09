@@ -15,6 +15,8 @@ function verifyToken(token) {
 
 const checkToken = {
   confirmToken: function (req, id) {
+    if (id == 0) return;
+
     const decode = decodeHead(req);
 
     if (decode.id !== id) {
