@@ -54,9 +54,45 @@ function one(table, id) {
   });
 }
 
-function add(table, data) {}
+function remove(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `DELETE FROM ${table} WHERE id = ?`,
+      data.id,
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
-function remove(table, id) {}
+function add(table, data) {
+  if (data && data.id == 0) {
+    return insert(table, data);
+  } else {
+    return update(table, data);
+  }
+}
+
+function insert(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(`INSERT INTO ${table} SET ?`, data, (error, result) => {
+      return error ? reject(error) : resolve(result);
+    });
+  });
+}
+
+function update(table, data) {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      `UPDATE ${table} SET ? WHERE id = ?`,
+      [data, data.id],
+      (error, result) => {
+        return error ? reject(error) : resolve(result);
+      }
+    );
+  });
+}
 
 module.exports = {
   all,
