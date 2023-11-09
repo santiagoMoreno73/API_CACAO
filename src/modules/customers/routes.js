@@ -1,13 +1,14 @@
 const express = require("express");
 
+const security = require("./security");
 const answers = require("../../red/answers");
 const controller = require("./index");
 const router = express.Router();
 
 router.get("/", all);
 router.get("/:id", one);
-router.post("/", add);
-router.put("/", remove);
+router.post("/", security(), add);
+router.put("/", security(), remove);
 
 async function all(req, res, next) {
   try {
