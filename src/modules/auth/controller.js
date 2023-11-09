@@ -11,12 +11,8 @@ module.exports = function (db_injected) {
 
   async function login(user, password) {
     const data = await db.query(TABLE, { user: user });
-    console.log("data", data.password);
-    console.log("password", password);
 
     return await bcrypt.compare(password, data.password).then((result) => {
-      console.log("result", result);
-
       if (result === true) {
         // generate token
         return auth.assignToken({ ...data });
