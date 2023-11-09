@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", all);
 router.get("/:id", one);
-router.post("/", security(), add);
+router.post("/", add);
 router.put("/", security(), remove);
 
 async function all(req, res, next) {
