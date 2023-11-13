@@ -18,6 +18,7 @@ module.exports = function (db_injected) {
 
   async function add(body) {
     const user = {
+      id: body.id,
       name: body.name,
       email: body.email,
       address: body.address,
