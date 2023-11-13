@@ -29,8 +29,11 @@ async function one(req, res, next) {
 
 async function add(req, res, next) {
   try {
-    const items = await controller.add(req.body);
-    if (req.body.id == 0) {
+    const id = req.body.id === undefined ? 0 : req.body.id;
+    const body = { ...req.body, id: id };
+    const items = await controller.add(body);
+
+    if (body.id == 0) {
       message = "The item was saved successfully";
     } else {
       message = "The item was updated successfully";
