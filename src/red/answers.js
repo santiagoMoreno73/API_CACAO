@@ -4,7 +4,6 @@ exports.success = function (req, res, message = "", status = 200) {
     error: false,
     status: status,
     body: message,
-    data: req.body,
   });
 };
 
