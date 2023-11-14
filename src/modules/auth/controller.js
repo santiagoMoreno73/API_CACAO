@@ -11,11 +11,12 @@ module.exports = function (db_injected) {
 
   async function login(user, password) {
     const data = await db.query(TABLE, { user: user });
+    const current_user = await db.one("user", data.id);
 
     return await bcrypt.compare(password, data.password).then((result) => {
       if (result === true) {
         // generate token
-        return auth.assignToken({ ...data });
+        return { token: auth.assignToken({ ...data }), user: current_user };
       } else {
         throw new Error("Invalid data");
       }
